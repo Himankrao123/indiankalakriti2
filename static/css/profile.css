@@ -1,0 +1,81 @@
+.profilediv{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    text-align: center;
+}
+.imgdiv{
+    width: 100%;
+    height: 200px;
+}
+.imgdiv img{
+    width: 175px;
+    height: 175px;
+    object-fit: cover;
+    border: 2px solid rgb(39, 39, 39);
+    border-radius: 50%;
+}
+.detailsdiv{
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    background-color: #F9E8D3;
+}
+.detailstable{
+    width: max-content;
+    text-align: left;
+    margin: 0 auto;
+    font-size: larger;
+}
+.detailstable td{
+    padding: 5px;
+}
+.detailstable td:first-child{
+    font-weight: bold;
+}
+.detailstable td:last-child{
+    font-weight: normal;
+}
+.detailstable td{
+    border-bottom: 1px solid rgb(39, 39, 39);
+}
+.editpbtn{
+    background-color: #d64e2cde;
+    border: none;
+    /* border-radius: 5px; */
+    font-size: larger;
+    font-weight: bold;
+    padding: 5px 10px;
+    color: white;
+}
+.cpbtn{
+    background-color: #84d7b9de;
+    border: none;
+    /* border-radius: 5px; */
+    font-size: larger;
+    font-weight: bold;
+    padding: 5px 10px;
+    color: white;
+}
+
+.forminput{
+    background-color: transparent;
+    border: none;
+    font-size: large;
+}
+
+.formtextarea{
+    background-color: transparent;
+    border: none;
+    font-size: large;
+    /* resize: none; */
+}
+
+@media screen and (max-width: 768px){
+    .detailstable,.forminput,.formtextarea{
+        font-size: small;
+    }
+}
+    

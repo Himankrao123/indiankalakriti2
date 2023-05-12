@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock title %} 
+{% block css%}/static/css/signin.css{% endblock css %} 
+{% block body %}
+    <div class="loginformdiv">
+        <form action="/#" enctype="multipart/form-data" onsubmit="return validateForm()" name="loginform" class="loginform" method="post">
+            {% csrf_token %}
+            <br><br><br>
+            <h1>SIGN UP</h1>
+            <h4>Join Indian Kalakriti and get your handicrafts at doorstep.</h4>
+            <div style="display: flex;flex-direction: row;flex-wrap: wrap;width: 100%;">
+                <input type="file" class="logininput" style="padding-left: 10px;padding-top: 5px;" required name="pphoto" accept="image/*" id="pphoto" hidden/>
+                <label class="loginlabel2" for="pphoto" id="pphoto2">Profile photo</label><br><br>
+                <input type="text" class="logininput" required placeholder="First name" name="fname"><br><br>
+                <input type="text" class="logininput" required placeholder="Last name" name="lname"><br><br>
+                <input type="text" class="logininput" required placeholder="Username" name="username"><br><br>
+                <input type="password" class="logininput" required placeholder="Password" name="password"><br><br>
+                <input type="password" class="logininput" required placeholder="Password again" name="password2"><br><br>
+                <input type="tel" pattern="[0-9]{10}" class="logininput" required placeholder="Contact Number" name="contact"><br><br>
+                <input type="email" class="logininput" required placeholder="Email" name="email"><br><br>
+                <p class="loginlabel">Date of birth</p><input type="date" class="logininput" required name="dob">
+                <p class="loginlabel">Gender</p><select class="logininput" name="gender"><option>Male</option><option>Female</option><option>Other</option></select>
+            </div>
+            <textarea required placeholder="Address" maxlength="100" name="address" class="inputtextarea"></textarea>
+            <br><br><br>
+            <button type="submit">SIGN UP</button><br><br><br>
+            <a href="/login" style="color: #ec5c4f;">Login (Already have an account)</a>
+            <br><br>
+        </form>
+        <script>
+            const actualBtn = document.getElementById('pphoto');
+
+            const fileChosen = document.getElementById('phphoto2');
+
+            actualBtn.addEventListener('change', function(){
+            fileChosen.textContent = this.files[0].name
+            })
+
+            function validateForm() {
+                var x = document.forms["loginform"]["password"].value;
+                var y = document.forms["loginform"]["password2"].value;
+                if (x !== y){
+                    alert("Passsword should match!\n");
+                    return false;
+                }
+                if (x == y) {
+                    if (x.length<8){
+                        alert("Password must be greater than 8 digits.");
+                        return false;
+                    }
+                    return true;
+                  }
+                else{
+                    return false;
+                }
+              }
+        </script>
+    </div>
+{% endblock body %} 

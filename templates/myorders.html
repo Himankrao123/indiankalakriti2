@@ -1,0 +1,25 @@
+{% extends 'base2.html' %}
+{% block title %}My orders{% endblock title %}
+{% block css %}/static/css/orders.css{% endblock css %}
+{% block body %}
+<h1 style="text-align:center;">My orders</h1>
+<div class="orderdiv">
+    {% for order in orders %}
+    <div class="order">
+        <p>
+            <a href="/order/{{order.orderid}}" style="text-decoration:none;color:black;font-size:x-large;"><b>{{order.nameonpurchase}}&nbsp;|&nbsp;{{order.dateofpurchase}}&nbsp;|&nbsp;{{order.amount}}&nbsp;|&nbsp;{{order.orderid}}</b></a><br>
+            <ul>
+                {% for item in order.items %}
+                <li>{{item.name}}&nbsp;--&nbsp;{{item.quantity}} unit&#40;s&#41;</li>
+                {% endfor %}
+            </ul>
+        </p>
+      </div>
+    {% empty %}
+    <p style="width:100%;font-size:large;text-align:center;">No orders placed yet<br><br>
+      <a style="text-decoration:none;font-size:large;" href="/store/madhubani_painting">Visit store</a>
+    </p>
+    
+    {% endfor %}
+  </div>
+{% endblock body %}

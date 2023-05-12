@@ -1,0 +1,102 @@
+.loginformdiv {
+    background-color: transparent;
+    height: max-content;
+    width: 100%;
+    display: flex;
+}
+
+.loginform {
+    font-family: "Roboto", sans-serif;
+    width: 50%;
+    color: auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    /* overflow-y: scroll; */
+}
+
+.logininput {
+    width: 40%;
+    text-align: center;
+    /* background-color: #b8a81c; */
+    background-color: transparent;
+    height: 50px;
+    border: black 0.7px solid;
+    border-left: none;
+    border-right: none;
+    box-shadow: grey 0px 0px 3px;
+    font-size: x-large;
+    /* border-radius: 16px; */
+    margin: 10px 5% 10px 5%;
+    /* font-size: medium; */
+}
+
+.inputtextarea{
+    width: 40%;
+    text-align: center;
+    background-color:transparent;
+    height: 80px;
+    border: black 0.7px solid;
+    border-left: none;
+    border-right: none;
+    box-shadow: grey 0px 0px 3px;
+    font-size: x-large;
+    margin: 10px 5% 10px 5%;
+}
+
+.loginlabel {
+    padding-top: 15px;
+    width: 40%;
+    text-align: center;
+    margin: 10px 5% 10px 5%;
+    height: 50px;
+    cursor: pointer;
+}
+.loginlabel2 {
+    padding-top: 15px;
+    width: 40%;
+    text-align: center;
+    margin: 10px 5% 10px 5%;
+    height: 50px;
+    cursor: pointer;
+    border: black 0.7px solid;
+    border-left: none;
+    border-right: none;
+    box-shadow: grey 0px 0px 3px;
+    font-size: x-large;
+}
+
+.loginform button {
+    font-size: x-large;
+    color: white;
+    background-color: #8b4726;
+    border: none;
+    border-radius: 16px;
+    padding: 10px 40px;
+}
+
+.loginform a {
+    text-decoration: none;
+    font-size: small;
+}
+
+@media screen and (max-width: 768px) {
+    .loginform {
+        width: 100%;
+    }
+
+    .logininput, .loginlabel, .loginlabel2 {
+        height: 40px;
+        font-size: large;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .inputtextarea{
+        /* height: 40px; */
+        font-size: large;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

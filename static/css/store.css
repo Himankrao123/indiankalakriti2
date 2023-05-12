@@ -1,0 +1,115 @@
+.categorydiv{
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-top: 1px solid black;
+}
+
+.categorylink{
+    text-decoration: none;
+    color: black;
+    width: 25%;
+}
+.category{
+    /* color: white; */
+    padding-top: 5px;
+    text-align: center;
+    width: 100%;
+    font-size: larger;
+    background-color: transparent;
+    border: none;
+}
+.productdiv{
+    width: 100%;
+    background-color: transparent;
+    min-height: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* justify-content: space-around; */
+}
+.productlink{
+    text-decoration: none;
+    /* color: black; */
+    /* width:20%; */
+}
+.product{
+    position: relative;
+    margin: 1%;
+    width: 18%;
+    height: 450px;
+    background-color: rgb(214, 236, 255);
+    /* transition: 0.5s ease; */
+    text-align: center;
+    padding: 5px;
+}
+.wishlistbutton{
+    font-size: 50px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+}
+
+.pname{
+    font-weight: bold;
+    font-size: larger;
+    padding: 0%;
+    margin: 0%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.product:hover{
+    background-color: #F9E8D3;
+}
+.productimage{
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+@media (max-width:1500px){
+    .product{
+        width: 23%;
+    }
+    .productimage{
+        height: 300px;
+    }
+    .product{
+        height: 400px;
+    }
+}
+@media (max-width:1200px){
+    .product{
+        width: 31.33%;
+    }
+    .productimage{
+        height: 300px;
+    }
+    .product{
+        height: 400px;
+    }
+    .category{
+        font-size: medium;
+    }
+}
+
+@media (max-width:700px){
+    .product{
+        width: 48%;
+    }
+    .productimage{
+        height: 200px;
+    }
+    .product{
+        height: 300px;
+    }
+    .category{
+        font-size: small;
+    }
+}
+

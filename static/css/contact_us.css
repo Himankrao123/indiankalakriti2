@@ -1,0 +1,36 @@
+.suggestionform{
+    text-align: center;
+    padding: 10px;
+    min-height: 93%;
+    background-color: transparent;
+}
+.inputarea{
+    width: 40%;
+    text-align: center;
+    background-color: transparent;
+    height: 50px;
+    border: none;
+    box-shadow: black 0px 1px 2px;
+    font-size: x-large;
+    margin: 10px 5% 10px 5%;
+}
+.inputtextarea{
+    width: 40%;
+    text-align: center;
+    background-color:transparent;
+    height: 80px;
+    border: none;
+    box-shadow: black 0px 1px 2px;
+    font-size: x-large;
+    margin: 10px 5% 10px 5%;
+}
+
+@media screen and (max-width: 768px) {
+    .suggestionform {
+        width: 100%;
+    }
+
+    .inputarea , .inputtextarea {
+        width: 90%;
+    }
+}

@@ -1,0 +1,50 @@
+{% extends template %} {% block title %}My wishlist{% endblock title %} 
+{% block css%}/static/css/store.css{% endblock css %}
+{% block body %}
+<h1 style="text-align:center;">My Wishlist</h1>
+
+<div class="productdiv">
+    {% for product in products %}
+    <div class="product">
+      <button
+        onclick="removefromwishlist(this.id)"
+        id="wr{{ product.productID }}"
+        class="wishlistbutton"
+        style="color: red;display:block;"
+      >
+        &#9829;
+      </button>
+      <button
+        onclick="addtowishlist(this.id)"
+        id="ww{{ product.productID }}"
+        class="wishlistbutton"
+        style="color: white;display:none;"
+      >
+        &#9829;
+      </button>
+      <a href="/product/{{ product.productID }}" class="productlink">
+        <img src="/media/{{ product.image }}" loading="lazy" class="productimage"
+      /></a>
+      <br /><br />
+      <p class="pname">{{ product.name }}</p>
+      {% if product.outofstock == True %}
+      <span style="color: red">Out of stock!</span>
+      {% elif product.discount == 0 %}
+      <span style="font-size: 20px">&#8377; {{ product.price }}</span>
+      {% elif product.discount > 0%}
+      <span style="font-size: 20px"
+        >&#8377;<b> {{ product.discountedprice }} </b></span
+      ><strike>{{ product.price }}</strike> ({{ product.discount }}% off) 
+      {% endif %}
+    </div>
+    {% empty %}
+    <p style="width:100%;font-size:large;text-align:center;">Oops, No products in wishlist!<br><br>
+      <a style="text-decoration:none;font-size:large;" href="/store/madhubani_painting">Visit store</a>
+    </p>
+    
+    {% endfor %}
+  </div>
+
+{% endblock body %} 
+{% block javascript2 %}https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js{% endblock javascript2 %} 
+{% block javascript3 %}/static/js/store.js{% endblock javascript3 %}

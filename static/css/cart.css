@@ -1,0 +1,149 @@
+.heading{
+    text-align:center;
+}
+.checkoutop{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+.checkoutbutton{
+    margin: 0%;
+    margin: 5px;
+    font-size: large;
+    color: white;
+    border: none;
+    background-color: #a0481c;
+    padding: 10px;
+    transition: 1s ease;
+}
+.productdiv{
+    width: 100%;
+    background-color: transparent;
+    min-height: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 40px;
+}
+.productlink{
+    text-decoration: none;
+}
+.product{
+    position: relative;
+    margin: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 350px;
+    background-color: rgb(214, 236, 255);
+    /* transition: 0.5s ease; */
+    text-align: center;
+    padding: 25px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.wishlistbutton{
+    font-size: 50px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+}
+
+.productimgdiv{
+    width: 40%;
+    align-items: center;
+}
+
+.productimage{
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
+.productdetailsdiv{
+    width: 60%;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.pname{
+    font-weight: bold;
+    font-size: x-large;
+    padding: 0%;
+    margin: 0%;
+}
+.product:hover{
+    background-color: #F9E8D3;
+}
+
+.cartconfigdiv{
+    width: 80%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: right;
+}
+.cartchangebutton{
+    margin: 0%;
+    margin: 5px;
+    font-size: large;
+    color: white;
+    border: none;
+    background-color: #a0481c;
+    /* padding: 10px; */
+    height: 30px;
+    width: 30px;
+    transition: 1s ease;
+}
+.productbutton:hover{
+    background-color:aquamarine;
+    color: #a0481c;
+}
+.qtycount{
+    margin: 0%;
+    background-color: #a0481c;
+    color: white;
+    /* height: 30px;
+    width: 50px; */
+    text-align: center;
+    padding: 10px 20px;
+    font-size: large;
+}
+
+
+@media (max-width:700px){
+    .productdiv{
+        padding: 10px;
+    }
+    .product{
+        width: 100%;
+        padding: 10px;
+        height: 170px;
+    }
+    .productimgdiv{
+        width: 30%;
+    }
+    .productimage{
+        max-height: 150px;
+    }
+    .productdetailsdiv{
+        width: 70%;
+        right:0%
+    }
+    .pname{
+        font-size: medium;
+    }
+    .cartconfigdiv{
+        margin-top: 10px;
+    }
+}
+

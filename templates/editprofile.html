@@ -1,0 +1,75 @@
+{% extends 'base2.html' %}
+{% block title %}{{ username }}{% endblock title %}
+{% block css %}/static/css/profile.css{% endblock css %}
+{% block body %}
+    <div class="profilediv">
+        <h2>Edit profile</h2>
+        <div class="imgdiv">
+            <img class="profileimage" src="/media/{{ profilephoto }}" alt="profile photo">
+        </div>
+        <div class="detailsdiv">
+            <form action="/editprofile/" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <input type="file" name="pphoto" id="profilephoto" id="profilephoto" accept="image" onchange="previewImage(event);" hidden>
+                <label class="cpbtn" for="profilephoto">Change profile photo</label><br><br>
+            <table class="detailstable">
+                <tr>
+                    <td>First name:</td>
+                    <td><input type="text" required name="fname" class="forminput" placehodler="First name" value="{{ fname }}"></td>
+                </tr>
+                <tr>
+                    <td>Last name:</td>
+                    <td><input type="text" class="forminput" required placeholder="Last name" name="lname" value="{{ lname }}"></td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" class="forminput" required placeholder="Username" name="username" value="{{ username }}"></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="email" class="forminput" required placeholder="Email" name="email" value="{{ email }}"></td>
+                </tr>
+                <tr>
+                    <td>Contact number:</td>
+                    <td><input type="tel" pattern="[0-9]{10}" class="forminput" required placeholder="Contact Number" name="contact" value="{{ contactnumber }}"></td>
+                </tr>
+                <tr>
+                    <td>Gender:</td>
+                    <td><select class="forminput" name="gender">
+                        {% for i in genderlist %}
+                            {% if i == gender %}
+                            <option selected>{{ i }}</option>
+                            {% else %}
+                            <option>{{ i }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><textarea required placeholder="Address" maxlength="100" name="address" class="formtextarea">{{ address }}</textarea></td>
+                </tr>
+                <tr>
+                    <td>Date of birth:</td>
+                    <td><input type="date" class="forminput" required name="dob" value="{{ dob }}"></td>
+                </tr>
+            </table>
+            <br><br>
+            <button class="editpbtn" type="submit">Save</button><br><br>
+            <a href="/profile" style="text-decoration:none;"><button type="button" class="editpbtn"style="background-color:transparent;color:black;">Cancel</button></a>
+            </form>
+        </div>
+    </div>
+    <script>
+        const previewImage = (event) => {
+        const imageFiles = event.target.files;
+        const imageFilesLength = imageFiles.length;
+        if (imageFilesLength > 0) {
+            const imageSrc = URL.createObjectURL(imageFiles[0]);
+            const imagePreviewElement = document.querySelector(".profileimage");
+            imagePreviewElement.src = imageSrc;
+            // imagePreviewElement.style.display = "block";
+        }
+        };
+    </script>
+{% endblock body %}

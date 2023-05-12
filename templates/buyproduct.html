@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} | INDIAN KALAKRITI</title> 
+    <link rel="shortcut icon" type="favicon/png" href="/static/media/photos/logo.png">
+    <link rel="stylesheet" type="text/css" href="/static/css/buyproduct.css">
+    <!-- <script src="/static/js/base.js"></script> -->
+</head>
+<body>
+    <h2 style="width: 100%; text-align: center;">Place order</h2>
+    <div class="productdiv">
+        <div class="productdetail1">
+            <div class="productimgdiv">
+            <img class="productimage" src="/media/{{ image }}"></div>
+            <div class="productmaindetails">
+            <div class="productdetails"><p class="productname">{{ name }}</p>
+                {% if discount == 0 %}
+                <span class="ptext">&#8377; {{ price }}</span>
+                {% elif discount > 0%}
+                <span class="ptext">&#8377;<b> {{ discountedprice }} </b></span>
+                <span class="stext">{{ price }}</span> <span class="distext">({{ discount }}% off) </span>
+                {% endif %}
+            </div>
+            <p class="productdescription"><span><b>Description:-</b></span><br>{{ description }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="loginformdiv">
+        <form action="#" class="loginform" method="POST">
+            {% csrf_token %}
+            <br><br><br>
+            <h1>Purchase details</h1>
+            <h4>Please fill the from to continue</h4>
+            <span>Name</span><br>
+            <input type="text" class="logininput" required placeholder="Name" name="name" ><br><br>
+            <span>Pincode</span><br>
+            <input type="number" pattern="[0-9]{6}" class="logininput" required placeholder="Pincode" name="pincode" ><br><br>
+            <span>Contact number for delivery</span><br>
+            <input type="tel" pattern="[0-9]{10}" class="logininput" required placeholder="Contact number" name="phone" value="{{ phone }}"><br><br>
+            <span>Quantity</span><br>
+            <input type="number" class="logininput" required placeholder="Quantity" name="quantity" min="1" step="1"><br><br>
+            <span>Mode of payment</span><br>
+            <select name="modeofpayment" class="logininput" required>
+                <option value="card">Debit/Credit card</option>
+                <option value="netbanking">Net Banking</option>
+                <option value="upi">UPI</option>
+                <option value="cod">Cash on delivery</option>
+            </select><br><br>
+            <span>Address</span><br>
+            <textarea required placeholder="Address" maxlength="100" name="address" class="inputtextarea" >{{ address }}</textarea><br><br>
+            <button type="submit">Place order</button><br><br><br>
+            <br><br>
+        </form>
+    </div>
+</div>
+</body>
+</html>

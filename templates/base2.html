@@ -1,0 +1,91 @@
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="INDIAN KALAKRITI - The best place to buy handicrafts.bottle-art, nameplates, madhubani painting, wall plates and many more.">
+    <title>{% block title %}{% endblock title %} | INDIAN KALAKRITI</title> 
+    <link rel="shortcut icon" type="favicon/png" href="/static/media/photos/logo.png">
+    <link rel="stylesheet" type="text/css" href="/static/css/base2.css">
+    <link rel="stylesheet" type="text/css" href="{% block css %}{% endblock css %}">
+    <link rel="stylesheet" type="text/css" href="{% block css2 %}{% endblock css2 %}">
+
+    <style>
+        
+    </style>
+    <script src="/static/js/base.js"></script>
+    <noscript>Sorry javascript is required for some functions......</noscript>
+    <script src="{% block javascript2 %}{% endblock javascript2 %}"></script>
+    <script src="{% block javascript3 %}{% endblock javascript3 %}"></script>
+</head>
+
+<body class="bodyofbase">
+    <div class="headdiv">
+        <div id="mySidebar" class="sidebar">
+            <a class="sidebarlinks" href="javascript:void(0)" id="closebtn" onclick="closeNav()">&times;</a>
+            <a class="sidebarlinks" href="javascript:void(0)" onclick="dropdown('dropdown1')">Profile</a>
+            <div id="dropdown1" style="height:0%;display: none;transition: 1s;">
+            <ul><a href="/profile" class="sidebarlinks" style="font-size:20px;">&ensp;View Profile</a></ul>
+            <ul><a href="/editprofile" class="sidebarlinks" style="font-size:20px;">&ensp;Edit Profile</a></ul>
+            <ul><a href="/logout" class="sidebarlinks" style="font-size:20px;">&ensp;Logout</a></ul>
+            </div>
+            <a class="sidebarlinks" href="/cart">My Cart</a>
+            <a class="sidebarlinks" href="/wishlist">My Wishlist</a>
+            <a class="sidebarlinks" href="/orders">My Orders</a>
+            <a class="sidebarlinks" href="javascript:void(0)" onclick="dropdown('dropdown3')">Store</a>
+            <div id="dropdown3" style="height:0%;display: none;transition: 1s;">
+            <ul><a href="/store/madhubani_painting" class="sidebarlinks" style="font-size:20px;">&ensp;Madhubani painting</a></ul>
+            <ul><a href="/store/bottle_art" class="sidebarlinks" style="font-size:20px;">&ensp;Bottle art</a></ul>
+            <ul><a href="/store/name_plates" class="sidebarlinks" style="font-size:20px;">&ensp;Name plates</a></ul>
+            <ul><a href="/store/wall_plates" class="sidebarlinks" style="font-size:20px;">&ensp;Wall plates</a></ul>
+            </div>
+            <a class="sidebarlinks" href="/contact_us">Contact Us</a>
+            <br><br><br>
+            <p class="followbut">Follow us:</p>
+            <hr>
+            <br>
+            <br>
+            <hr>
+            <p>
+            <a  class="otherlinks" href="/about">About</a> | 
+            <a class="otherlinks" href="/contact_us">Contact</a> | 
+            <a class="otherlinks" href="/terms_and_conditions">Terms and conditions</a> | 
+            <a class="otherlinks" href="/privacy_policy">Privacy policy</a></p><br><br><br>
+        </div>
+    </div>
+    <div class="toppara" id="toppara"><button class="openbtn" id="openbtn" onclick="openNav()">&#9776;</button>
+            <a class="topparaf" href="/">IK</a>&emsp;
+            <div class="dropdown2">
+                <button class="dropbtn">Profile</button>
+                <div class="dropdown-content">
+                  <a href="/profile">View profile</a>
+                  <a href="/editprofile">Edit profile</a>
+                  <a href="/logout">Logout</a>
+                </div>
+            </div>
+            <a class="sidebarlinks2" href="/cart">My Cart</a>
+            <a class="sidebarlinks2" href="/wishlist">My Wishlist</a>
+            <a class="sidebarlinks2" href="/orders">My Orders</a>
+            <div class="dropdown2">
+                <button class="dropbtn">Store</button>
+                <div class="dropdown-content">
+                  <a href="/store/madhubani_painting">Madhubani painting</a>
+                  <a href="/store/bottle_art">Bottle art</a>
+                  <a href="/store/name_plates">Name plates</a>
+                  <a href="/store/wall_plates">Wall plates</a>
+                </div>
+            </div>
+            <a class="sidebarlinks2" href="/contact_us">Contact Us</a>
+        </div>
+    <div id="messagediv" class="messagediv">
+        <p id="message"><span id="message2"></span><button onclick="closemessages()" style="background-color:white;border:none;float:right;">X</button></p> 
+    </div>
+    <div style="width: 100%;text-align: center;background-color: #d64e2cde;color: white;font-size: 20px;height: max-content;">{{ what }}</div>
+    <div class="bodyblock">
+        {% block body %}{% endblock body %}
+    </div>
+    
+    <script src="{% block javascript %}{% endblock javascript %}"></script>
+</body>
+
+</html>

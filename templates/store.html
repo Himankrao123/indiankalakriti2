@@ -1,0 +1,77 @@
+{% extends template %} {% block title %}Store{% endblock title %} 
+{% block css%}/static/css/store.css{% endblock css %}
+{% block body %}
+{% comment %} <hr class="margin:0px;" /> {% endcomment %}
+<div class="categorydiv">
+  <a href="/store/bottle_art" class="categorylink"
+    ><div class="category">Bottle Art</div></a
+  >
+  <a href="/store/madhubani_painting" class="categorylink"
+    ><div class="category">Madhubani painting</div></a
+  >
+  <a href="/store/wall_plates" class="categorylink"
+    ><div class="category">Wall plates</div></a
+  >
+  <a href="/store/name_plates" class="categorylink"
+    ><div class="category">Name plates</div></a
+  >
+</div>
+<div class="productdiv">
+  {% for product in products %}
+  <div class="product">
+    {% if product.wcolor == "red" %}
+    <button
+      onclick="removefromwishlist(this.id)"
+      id="wr{{ product.productID }}"
+      class="wishlistbutton"
+      style="color: red;display:block;"
+    >
+      &#9829;
+    </button>
+    <button
+      onclick="addtowishlist(this.id)"
+      id="ww{{ product.productID }}"
+      class="wishlistbutton"
+      style="color: white;display:none;"
+    >
+      &#9829;
+    </button>
+    {% elif product.wcolor == "white" %}
+    <button
+      onclick="removefromwishlist(this.id)"
+      id="wr{{ product.productID }}"
+      class="wishlistbutton"
+      style="color: red;display:none;"
+    >
+      &#9829;
+    </button>
+    <button
+      onclick="addtowishlist(this.id)"
+      id="ww{{ product.productID }}"
+      class="wishlistbutton"
+      style="color: white;display:block;"
+    >
+      &#9829;
+    </button>
+    {% endif %}
+    <a href="/product/{{ product.productID }}" class="productlink">
+      <img src="/media/{{ product.image }}" loading="lazy" class="productimage"
+    /></a>
+    <br /><br />
+    <p class="pname">{{ product.name }}</p>
+    {% if product.outofstock == True %}
+    <span style="color: red">Out of stock!</span>
+    {% elif product.discount == 0 %}
+    <span style="font-size: 20px">&#8377; {{ product.price }}</span>
+    {% elif product.discount > 0%}
+    <span style="font-size: 20px"
+      >&#8377;<b> {{ product.discountedprice }} </b></span
+    ><span style="text-decoration:line-through;">{{ product.price }}</span> ({{ product.discount }}% off) 
+    {% endif %}
+  </div>
+  {% endfor %}
+  <p style="width: 100%; text-align: center">More products coming soon.....</p>
+</div>
+
+{% endblock body %} {% block javascript2 %}https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js{% endblock javascript2 %} 
+{% block javascript3 %}/static/js/store.js{% endblock javascript3 %}

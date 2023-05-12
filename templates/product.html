@@ -1,0 +1,86 @@
+{% extends template %}
+{% block title %}product{% endblock title %}
+{% block css%}/static/css/product.css{% endblock css %} 
+{% block body %}
+
+<div class="productdiv">
+    <div class="productdetail1">
+        {% if product.wcolor == "red" %}
+            <button
+            onclick="removefromwishlist(this.id)"
+            id="wr{{ product.productID }}"
+            class="wishlistbutton"
+            style="color: red;display:block;"
+            >
+            &#9829;
+            </button>
+            <button
+            onclick="addtowishlist(this.id)"
+            id="ww{{ product.productID }}"
+            class="wishlistbutton"
+            style="color: white;display:none;"
+            >
+            &#9829;
+            </button>
+            {% elif product.wcolor == "white" %}
+            <button
+            onclick="removefromwishlist(this.id)"
+            id="wr{{ product.productID }}"
+            class="wishlistbutton"
+            style="color: red;display:none;"
+            >
+            &#9829;
+            </button>
+            <button
+            onclick="addtowishlist(this.id)"
+            id="ww{{ product.productID }}"
+            class="wishlistbutton"
+            style="color: white;display:block;"
+            >
+            &#9829;
+            </button>
+        {% endif %}
+        <div class="productimgdiv">
+        <img class="productimage" src="/media/{{ product.image }}"></div>
+        <div class="productmaindetails">
+        <div class="productdetails"><p class="productname">{{ product.name }}</p>
+            {% if product.outofstock == True %}
+            <span style="color: red">Out of stock!</span>
+            {% elif product.discount == 0 %}
+            <span class="ptext">&#8377; {{ product.price }}</span>
+            {% elif product.discount > 0%}
+            <span class="ptext">&#8377;<b> {{ product.discountedprice }} </b></span>
+            <span class="stext">{{ product.price }}</span> <span class="distext">({{ product.discount }}% off) </span>
+            {% endif %}<br>
+            <p>Prduct Category: {{ product.category }}</p>
+        </div>
+        <div class="productoptions">
+            {% if product.outofstock == False %}
+            <a href="/buyproduct/{{ product.productID }}"><button class="productbutton">Buy Now</button></a>
+            {% endif %}
+            
+            {% if product.cart == True %}
+            <a href="/cart" style="text-decoration: none;color: white;"><button class="productbutton">View Cart</button></a>
+            {% elif product.cart == False %}
+            <button class="productbutton" id="{{ product.productID }}" onclick="addtocart(this.id)">Add To Cart</button>
+            <a href="/cart" style="text-decoration: none;color: white;"><button id="s{{ product.productID }}" style="display: none;" class="productbutton">View Cart</button></a>
+            {% endif %}
+        </div>
+        
+        <p class="productdescription"><span><b>Description:-</b></span><br>{{ product.description }}</p>
+        </div>
+    </div>
+    <div class="productdetail2">
+        <h2>More product details:- </h2>
+        <ul>
+        <li>Size: {{ product.size }}</li>
+        <li>Materials used: {{ product.materials }}</li>
+        <li>Product ID: {{ product.productID }}</li>
+        </ul>
+    
+    </div>
+</div>
+
+{% endblock body %}
+{% block javascript2 %}https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js{% endblock javascript2 %} 
+{% block javascript3 %}/static/js/store.js{% endblock javascript3 %}

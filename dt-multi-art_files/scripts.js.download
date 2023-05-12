@@ -1,0 +1,2 @@
+(function(){var t={};(function(){for(var e=0,n=document.getElementById("sections-script").getAttribute("data-sections").split(",");e<n.length;e++)t[n[e]]=!0})(),function(){if(!(!t.gallery&&!window.DesignMode))try{$(".gallery-pop").magnificPopup({type:"image",closeOnContentClick:!0,mainClass:"mfp-img-mobile",image:{verticalFit:!0}})}catch(e){console.error(e)}}()})();
+//# sourceMappingURL=/s/files/1/0632/4708/9902/t/2/compiled_assets/scripts.js.map?1853=

@@ -1,0 +1,46 @@
+{% extends 'base2.html' %} {% block title %}My cart{% endblock title %} 
+{% block css%}/static/css/cart.css{% endblock css %}
+{% block body %}
+<h1 class="heading">My Cart</h1>
+<div class="checkoutop">
+    <a href="/buycart" style="text-decoration:none;color:white;"><button class="checkoutbutton">Checkout</button></a>
+    total: &#8377; <span id="totalamount">{{ totalamount }}</span>
+</div>
+<div class="productdiv">
+    {% for product in products %}
+    <div class="product">
+        <div class="productimgdiv">
+        <a href="/product/{{ product.productID }}" class="productlink">
+            <img src="/media/{{ product.image }}" loading="lazy" class="productimage"/>
+        </a>
+        </div>
+        <div class="productdetailsdiv">
+            <p class="pname">{{ product.name }}</p><br>
+            {% if product.outofstock == True %}
+            <span style="color: red">Out of stock!</span>
+            {% elif product.discount == 0 %}
+            <span style="font-size: 20px">&#8377; {{ product.price }}</span>
+            {% elif product.discount > 0%}
+            <span style="font-size: 20px">
+                &#8377;<b> {{ product.discountedprice }} </b>
+            </span>
+            <span style="text-decoration:line-through;">{{ product.price }}</span> ({{ product.discount }}% off) 
+            {% endif %}
+            <div class="cartconfigdiv">
+                <button class="cartchangebutton" id="{{ product.productID }}" onclick="removefromcart(this.id)">-</button>
+                <p class="qtycount" id="c{{ product.productID }}">{{ product.quantity }}</p>
+                <button class="cartchangebutton" id="{{ product.productID }}" onclick="addtocart(this.id)">+</button>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p style="width:100%;font-size:large;text-align:center;">Oops, No products in Cart!<br><br>
+      <a style="text-decoration:none;font-size:large;" href="/store/madhubani_painting">Visit store</a>
+    </p>
+    
+    {% endfor %}
+  </div>
+
+{% endblock body %} 
+{% block javascript2 %}https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js{% endblock javascript2 %} 
+{% block javascript3 %}/static/js/cart.js{% endblock javascript3 %}

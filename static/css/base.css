@@ -1,0 +1,290 @@
+@font-face {
+  font-family: "AmberyGardenRegular";
+  src: url("/static/scripts/AmberyGardenRegular-PKjGd.ttf");
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #999;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.bodyofbase {
+  margin: 0%;
+  padding: 0%;
+  background-color: #FCF1E2;
+  /* background-color: #396132; */
+  background-blend-mode: soft-light;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.bodyblock {
+  background-color: transparent;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0%;
+  margin: 0%;
+  border: 0%;
+}
+.homelink {
+  text-decoration: none;
+  color: black;
+  margin-top: 0px;
+}
+.toppara {
+  text-align: center;
+  background-color: #F9E8D3;
+  padding: 5px;
+  padding-top: 20px;
+  margin-top: 0px;
+  margin-bottom: 0%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  justify-content: center;
+}
+.topparaf {
+  border: 0.5px solid black;
+  box-shadow: grey 0px 0px 3px 0px;
+  font-family: AmberyGardenRegular;
+  letter-spacing: 6px;
+  font-size: 50px;
+  color: #bc4d15;
+  /* margin-top: 2px; */
+  padding: 10px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-weight: 600;
+  width: 70px;
+  height: 70px;
+}
+.followbut {
+  color: white;
+}
+
+.messagediv {
+  width: 100%;
+  text-align: center;
+  background-color: #d64e2cde;
+  color: white;
+  font-size: 20px;
+  height: max-content;
+  display: none;
+}
+#message{
+  width: 100%;
+}
+
+/* sidebar */
+.sidebar {
+  height: 100%;
+  /* 100% Full-height */
+  width: 0;
+  /* 0 width - change this with JavaScript */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: #111;
+  /* Black*/
+  overflow-x: hidden;
+  /* margin-top: 30px; */
+  /* Disable horizontal scroll */
+  padding-top: 60px;
+  /* Place content 60px from the top */
+  transition: 0.5s;
+  /* 0.5 second transition effect to slide in the sidebar */
+}
+
+/* The sidebar links */
+.sidebar .sidebarlinks {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar .sidebarlinks:hover {
+  color: #f1f1f1;
+}
+.sidebar .sidebarlinkslist {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  background-color: rgb(136, 78, 211);
+  border: none;
+  color: #afafaf;
+  display: block;
+}
+.sidebar .sidebarlinkslist:hover {
+  color: #f1f1f1;
+}
+.sidebar .gallarybuttonpara {
+  background-color: rgb(136, 78, 211);
+}
+.sidebar .sidebarsublinks {
+  margin-left: 10px;
+  padding: 4px 4px 4px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #afafaf;
+  display: block;
+  transition: 0.3s;
+}
+.sidebar .sidebarsublinks:hover {
+  color: #f1f1f1;
+}
+.sidebar .otherlinks {
+  font-size: 12px;
+  color: royalblue;
+}
+.sidebar .otherlinks:hover {
+  color: rebeccapurple;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar #closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  float: left;
+  display: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+.sidebarlinks2 ,  .dropbtn {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebarlinks2:hover , .dropbtn:hover {
+  color: black;
+}
+
+.dropbtn {
+  background-color: transparent;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown2 {
+  padding-top:2px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #FCF1E2;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover *
+
+/* Show the dropdown menu on hover */
+.dropdown2:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+
+
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+/*#main {
+    transition: margin-left .5s;
+    If you want a transition effect 
+    padding: 20px;
+}*/
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {
+    padding-top: 15px;
+  }
+
+  .sidebar a {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .topparaf {
+    font-size: 40px;
+    letter-spacing: 3px;
+    /* width: 55px;
+    height: 55px; */
+  }
+  .toppara {
+    height: 12%;
+  }
+  .bodyblock {
+    height: 88%;
+    border-radius: 0%;
+  }
+  .openbtn{
+    display: block;
+    position: absolute;
+    left: 10px;
+  }
+  .sidebarlinks2, .dropdown2, .dropbtn {
+    display: none;
+  }
+}
+@media screen and (max-width:400px) {
+  .topparaf {
+    font-size: 30px;
+  }
+}
+
+/* end sidebar */
+* {
+  box-sizing: border-box;
+}

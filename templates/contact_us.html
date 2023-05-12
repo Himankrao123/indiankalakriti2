@@ -1,0 +1,18 @@
+{% extends template %}
+{% block title %}Contact us{% endblock title %}
+{% block css %}/static/css/contact_us.css{% endblock css %}
+{% block body %}
+<form action="/contact_us" class="suggestionform" method="POST">
+    {% csrf_token %}
+    <h2 style="font-family:Helvetica;">Fill the form to connect with us......</h2>
+    <input type="text" name="name" class="inputarea" placeholder="Name" required><br>
+    <input type="tel" pattern="[0-9]{5}" name="number" class="inputarea" placeholder="Phone number" required><br>
+    <input type="email" name="email" class="inputarea" placeholder="E-mail" required><br>
+    <input type="text" name="subject" class="inputarea" required placeholder="Subject"><br>
+    <textarea required placeholder="What do you want to say...." maxlength="100" name="desc" class="inputtextarea"></textarea><br><br><br>
+    <button type="submit" style="color: white; background-color: royalblue;border: none;padding: 10px 20px;font-size:medium;font-weight:bold;">Submit</button>&nbsp;&nbsp;&nbsp;
+    <button type="reset" style="color: white;background-color: red;border: none;padding: 10px 20px;font-size:medium;font-weight:bold;">Reset</button>
+    <br><br><br>
+    <h2>Note:- Your query will be processed within 2 bussiness days.</h2>
+</form>
+{% endblock body %}

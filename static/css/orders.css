@@ -1,0 +1,21 @@
+.orderdiv{
+    width:100%;
+    display: flexbox;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+.order{
+    width: 90%;
+    background-color: rgb(214, 236, 255);
+    padding: 10px;
+    margin: 10px;
+}
+.order:hover{
+    background-color: #F9E8D3;
+    box-shadow: grey 0px 0px 3px 0px;
+}

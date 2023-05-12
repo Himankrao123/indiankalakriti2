@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} | INDIAN KALAKRITI</title> 
+    <link rel="shortcut icon" type="favicon/png" href="/static/media/photos/logo.png">
+    <link rel="stylesheet" type="text/css" href="/static/css/buyproduct.css">
+    <!-- <script src="/static/js/base.js"></script> -->
+</head>
+<body>
+    <br>
+    <h1 style="width: 100%; text-align: center;">Place order</h1>
+    <div class="loginformdiv">
+        <form action="#" class="loginform" method="POST">
+            {% csrf_token %}
+            <br><br><br>
+            <h4>Please fill the from to continue</h4>
+            <span>Name</span><br>
+            <input type="text" class="logininput" required placeholder="Name" name="name" value="{{ name }}" ><br><br>
+            <span>Pincode</span><br>
+            <input type="number" pattern="[0-9]{6}" class="logininput" required placeholder="Pincode" name="pincode" ><br><br>
+            <span>Contact number for delivery</span><br>
+            <input type="tel" pattern="[0-9]{10}" class="logininput" required placeholder="Contact number" name="phone" value="{{ phone }}"><br><br>
+            <span>Mode of payment</span><br>
+            <select name="modeofpayment" class="logininput" required>
+                <option value="card">Debit/Credit card</option>
+                <option value="netbanking">Net Banking</option>
+                <option value="upi">UPI</option>
+                <option value="cod">Cash on delivery</option>
+            </select><br><br>
+            <span>Address</span><br>
+            <textarea required placeholder="Address" maxlength="100" name="address" class="inputtextarea" >{{ address }}</textarea><br><br>
+            <button type="submit">Place order</button><br><br><br>
+            <br><br>
+        </form>
+    </div>
+</div>
+</body>
+</html>

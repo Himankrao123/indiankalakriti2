@@ -1,0 +1,49 @@
+{% extends 'base2.html' %}
+{% block title %}{{ username }}{% endblock title %}
+{% block css %}/static/css/profile.css{% endblock css %}
+{% block body %}
+    <div class="profilediv">
+        <h2>User profile details</h2>
+        <div class="imgdiv">
+            <img class="profileimage" src="/media/{{ profilephoto }}" alt="profile photo">
+        </div>
+        <div class="detailsdiv">
+            <table class="detailstable">
+                <tr>
+                    <td>First name:</td>
+                    <td>{{ fname }}</td>
+                </tr>
+                <tr>
+                    <td>Last name:</td>
+                    <td>{{ lname }}</td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td>{{ username }}</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>{{ email }}</td>
+                </tr>
+                <tr>
+                    <td>Contact number:</td>
+                    <td>{{ contactnumber }}</td>
+                </tr>
+                <tr>
+                    <td>Gender:</td>
+                    <td>{{ gender }}</td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td>{{ address }}</td>
+                </tr>
+                <tr>
+                    <td>Date of birth:</td>
+                    <td>{{ dob }}</td>
+                </tr>
+            </table>
+            <br><br>
+            <a href="/editprofile" style="text-decoration:none;color:white;"><button class="editpbtn">Edit profile</button></a>
+        </div>
+    </div>
+{% endblock body %}

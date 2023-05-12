@@ -1,0 +1,63 @@
+{% extends 'base2.html' %}
+{% block title %}Order {{ orderid }}{% endblock title %}
+{% block css %}/static/css/orders.css{% endblock css %}
+{% block css2 %}/static/css/cart.css{% endblock css2 %}
+{% block body %}
+<div class="orderdiv">
+    <div class="">
+        <p>
+            <br>
+            <h2 style="text-align:center;"><b>{{nameonpurchase}}&nbsp;|&nbsp;{{dateofpurchase}}&nbsp;|&nbsp;{{orderid}}</b></h2><br>
+            <p style="text-align:center;">
+            <b>Address:&nbsp;</b>{{address}}<br>
+            <b>Phone:&nbsp;</b>{{phone}}<br>
+            {% if modeofpayment == "cod" %}
+            <b>Payment method:&nbsp;</b>Cash on Delivery<br>
+            {% elif modeofpayment == "card" %}
+            <b>Payment method:&nbsp;</b>Card<br>
+            {% elif modeofpayment == "netbanking" %}
+            <b>Payment method:&nbsp;</b>Net Banking<br>
+            {% elif modeofpayment == "upi" %}
+            <b>Payment method:&nbsp;</b>UPI<br>
+            {% endif %}
+            {% if status == "placed" %}
+            <b>Status:&nbsp;</b>Placed and Pending<br>
+            {% elif status == "shipped" %}
+            <b>Status:&nbsp;</b>Shipped<br>
+            {% elif status == "delivered" %}
+            <b>Status:&nbsp;</b>Delivered<br>
+            {% else %}
+            <b>Status:&nbsp;</b>N/A<br>
+            {% endif %}
+            
+            <b>Amount:&nbsp;</b>Rs.{{amount}}<br>
+            </p>
+                {% for item in items %}
+                <div class="product" style="text-align:left;height:200px;">
+                    <div class="productimgdiv" style="max-height:200px">
+                    <a href="/product/{{ item.productid }}" class="productlink">
+                        <img src="/media/{{ item.image }}" loading="lazy" class="productimage" style="max-height:150px;"/>
+                    </a>
+                    </div>
+                    <div class="productdetailsdiv">
+                        <p class="pname">{{ item.name }}</p><br>
+                        {% if item.outofstock == True %}
+                        <span style="color: red">Out of stock!</span>
+                        {% elif item.discount == 0 %}
+                        <span style="font-size: 20px">&#8377; {{ item.price }}</span>
+                        {% elif item.discount > 0%}
+                        <span style="font-size: 20px">
+                            &#8377;<b> {{ item.discountedprice }} </b>
+                        </span>
+                        <span style="text-decoration:line-through;">{{ item.price }}</span> ({{ item.discount }}% off) 
+                        {% endif %}
+                        <br><br>
+                        <span style="font-size: 15px"><b>Quantity:</b> {{ item.quantity }} unit&#40;s&#41;</span>
+                        
+                    </div>
+                </div>
+                {% endfor %}
+        </p>
+      </div>
+  </div>
+{% endblock body %}
