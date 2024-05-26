@@ -8,30 +8,6 @@ def product_directory_path(instance, filename):
     return f"products/product_{instance.productID}/{filename}"
     
 class Product(models.Model):
-    # categories=[
-    #     ('Gifting',(
-    #         ('Hand painted bookmark','Hand painted bookmark'),
-    #         ('Hand painted bottle lamp with cork light','Hand painted bottle lamp with cork light'),
-    #         ('Hand painted teracota diya','Hand painted teracota diya'),
-    #         ('Hand painted jwellary box','Hand painted jwellary box'),
-    #         ('Hand painted decorative trunk','Hand painted decorative trunk')
-    #     )),
-    #     ('Home utility',(
-    #         ('Handpainted name plated','Handpainted name plated'),
-    #         ('Handpainted key holder','Handpainted key holder'),
-    #         ('Handpainted wooden tray','Handpainted wooden tray'),
-    #         ('Handpainted cups','Handpainted cups'),
-    #         ('Handpainted glass bottles','Handpainted glass bottles'),
-    #         ('Handpainted furnitures','Handpainted furnitures'),
-    #         ('Hand painted jwellary box','Hand painted jwellary box'),
-    #     )),
-    #     ('Home decor',(
-    #         ('Handpainted magnets','Handpainted magnets'),
-    #         ('Handpainted traditional painting','Handpainted traditional painting'),
-    #         ('Handpainted teracota diya','Handpainted teracota diya'),
-    #         ('Handpainted decorative trunk','Handpainted decorative trunk'),
-    #     ))
-    # ]
     categories=[("Madhubani painting","Madhubani painting"),("Bottle arts","Bottle arts"),("Name plates","Name plates"),("Wall plates","Wall plates")]
     # featuredin = models.CharField(max_length=30,choices=[('none','none'),('featured','featured'),('traditional art','traditional art'),('madhubani art','madhubani art'),('pichwai art','pichwai art')],default='none')
     productID = models.CharField(max_length=10,unique=True,primary_key=True)
@@ -50,6 +26,10 @@ class Product(models.Model):
     soldcount = models.IntegerField(default=0)
     quantity = models.IntegerField(default=1)
     outofstock = models.BooleanField(default=False)
+    featured = models.BooleanField(default=False)
+    trend_score = models.IntegerField(default=0)
+    reviewcount = models.IntegerField(default=0)
+    totalrating = models.FloatField(default=0)
 
 
     def __str__(self) -> str:
@@ -120,6 +100,22 @@ class Wishlist(models.Model):
     def __str__(self) -> str:
         return self.product.name
 
+class Product_history(models.Model):
+    user = models.ForeignKey(User,on_delete=PROTECT)
+    product = models.ForeignKey(Product,on_delete=PROTECT)
+    datetime = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.product.name
+
+class Rating(models.Model):
+    user = models.ForeignKey(User,on_delete=PROTECT)
+    product = models.ForeignKey(Product,on_delete=PROTECT)
+    review = models.TextField()
+    rating = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.product.name
 
 class Contact_us(models.Model):
     name = models.CharField(max_length=20)

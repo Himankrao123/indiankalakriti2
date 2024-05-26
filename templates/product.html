@@ -1,6 +1,6 @@
 {% extends template %}
 {% block title %}product{% endblock title %}
-{% block css%}/static/css/product.css{% endblock css %} 
+{% block css%}/static/css/product.css{% endblock css %}
 {% block body %}
 
 <div class="productdiv">
@@ -79,8 +79,29 @@
         </ul>
     
     </div>
-</div>
 
+    <div class="reviewmaindiv">
+        <h2>Reviews</h2>
+        {% if template == "base2.html" %}
+        <div class="addreview">
+                <textarea required class="reviewinput" id="review" placeholder="Add a review" name="review"></textarea><br>
+                <input required type="number" id="rating" class="reviewinput" placeholder="Rating" min="0" max="5" name="rating"><br>
+                <button type="button" onclick="addreview()" class="reviewbutton">Submit</button>
+            </div>
+            {% endif %}
+            <input type="hidden" id="productID" value="{{ product.productID }}" name="productID">
+        <div class="reviewdiv" id="reviewdiv">
+            {% for review in reviews %}
+                <div class="review">
+                <p>Review : {{ review.review }}</p>
+                <p>Rating : {{ review.rating }}</p>
+                <hr>
+                </div>
+            {% endfor %}
+            </div>
+            <button id="getratingbtn" class="getratingbtn" onclick="getrating()">Load more.....</button>
+    </div>
+</div>
 {% endblock body %}
 {% block javascript2 %}https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js{% endblock javascript2 %} 
 {% block javascript3 %}/static/js/store.js{% endblock javascript3 %}

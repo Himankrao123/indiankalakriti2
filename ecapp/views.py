@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from ecapp.models import UserProfile,Contact_us,Product,Wishlist,Cart,PurchasedProduct,OrderDetails,PaymentDetails
+from ecapp.models import UserProfile,Contact_us,Product,Wishlist,Cart,PurchasedProduct,OrderDetails,PaymentDetails, Product_history, Rating
 from django.db import transaction
 import datetime
 import random
@@ -14,9 +14,21 @@ from django.core.mail import send_mail
 # Create your views here.
 
 def index(request):
+    trending_products = list(Product.objects.filter(outofstock=False).order_by("-trend_score","-soldcount")[:10].values("name","image","price","discount","productID"))
+    for item in trending_products:
+        item["discountedprice"] = int(item["price"]-item["price"]*item["discount"]/100)
+    featured_products = list(Product.objects.filter(outofstock=False,featured=True).order_by("-soldcount")[:10].values("name","image","price","discount","productID"))
+    for item in featured_products:
+        item["discountedprice"] = int(item["price"]-item["price"]*item["discount"]/100)
     if request.user.is_anonymous:
-        return render(request, 'index.html',{"template":"base.html"})
-    return render(request,'index.html',{"template":"base2.html"})
+        return render(request, 'index.html',{"template":"base.html","trending_products":trending_products,"featured_products":featured_products})
+    recent_products = list(Product_history.objects.filter(user=request.user).order_by("-datetime"))
+    recent_products = list(map(lambda x:x.product, recent_products))
+    recent_products = recent_products[:10]
+    recent_products = list(map(lambda x:{"name":x.name,"image":x.image,"price":x.price,"discount":x.discount,"productID":x.productID},recent_products))
+    for item in recent_products:
+        item["discountedprice"] = int(item["price"]-item["price"]*item["discount"]/100)
+    return render(request,'userindex.html',{"template":"base2.html","trending_products":trending_products,"featured_products":featured_products,"recent_products":recent_products})
 
 def contactus(request):
     if request.method == "POST":
@@ -60,7 +72,7 @@ def loginacc(request):
             login(request,userserv)
             return redirect('/')
         else:
-            message = {"what":"Something went wrong please try again"}
+            message = {"what":"Invalid password!"}
             return render(request, 'login.html', message)
     message = {"what":""}
     return render(request, 'login.html',message)
@@ -93,15 +105,10 @@ def signup(request):
                         message = {'what':'Email already exists. Please use another'}
                         return render(request, 'signup.html',message)
                     else:
-                        user = User.objects.create_user(username=username, password=password, email=email, first_name=fname, last_name=lname, is_active=False)
+                        user = User.objects.create_user(username=username, password=password, email=email, first_name=fname, last_name=lname, is_active=True)
                         user.save()
-                        userprofile = UserProfile(userz=user,contactnumber=contact, dateofbirth=dob,gender = gender,profilePhoto = pphoto, address = address,verifycode = a)
+                        userprofile = UserProfile(userz=user,contactnumber=contact, dateofbirth=dob,gender = gender,profilePhoto = pphoto, address = address,verifycode = a,verified = True)
                         userprofile.save()
-                        subject = 'Verify your email'
-                        message = f'Hi {fname} {lname},\n\nPlease verify your email by clicking on the link below:\nhttp://127.0.0.1:8000/verify/{a}\n\nThanks,\nTeam Indian Kalakriti'
-                        email_from = settings.EMAIL_HOST_USER
-                        recipient_list = [email,]
-                        send_mail( subject, message, email_from, recipient_list )
                         return redirect("/login")
         except:
             message = {'what':'Something went wrong'}
@@ -110,74 +117,6 @@ def signup(request):
         
     return render(request, 'signup.html')
 
-def verify(request,slug):
-    if UserProfile.objects.filter(verifycode=slug).exists:
-        with transaction.atomic():
-            userprofile = UserProfile.objects.get(verifycode=slug)
-            user = userprofile.userz
-            user.is_active = True
-            userprofile.vefiycode = ""
-            userprofile.verified = True
-            userprofile.save()
-            user.save()
-        return redirect("/login")
-    return redirect("/")
-
-def forgotpassword(request):
-    if request.method == "POST":
-        ausername = request.POST.get("username")
-        if "@" and "." in ausername:
-            if User.objects.filter(email=ausername).exists():
-                ausername = User.objects.get(email=ausername)
-                print("got user")
-            else:
-                message = {'what':'User does not exist'}
-                return render(request, 'forgotpassword.html',message)
-        else:
-            if User.objects.filter(username=ausername).exists():
-                ausername = User.objects.get(username=ausername)
-                print("got user")
-            else:
-                message = {'what':'User does not exist'}
-                return render(request, 'forgotpassword.html',message)
-        if ausername.is_active == False and UserProfile.objects.get(userz=User.objects.get(username=ausername.username)).verified == False:
-            message = {'what':'Please check your email to verify your account'}
-            return render(request, 'forgotpassword.html',message)
-        print("user exists")
-        char  = string.ascii_lowercase + string.digits
-        a = ''.join(random.choice(char) for _ in range(20)) 
-        while UserProfile.objects.filter(verifycode=a).exists():
-            a = ''.join(random.choice(char) for _ in range(20))
-        u = UserProfile.objects.get(userz = ausername)
-        u.verifycode = a
-        u.save()
-        print("sending mail")
-        subject = 'Forgot password!'
-        message = f'Hi {ausername.first_name} {ausername.last_name},\n\nYour requested password reset link is below:\nhttp://127.0.0.1:8000/changepassword/{a}\n\nThanks,\nTeam Indian Kalakriti'
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = [ausername.email,]
-        send_mail( subject, message, email_from, recipient_list )
-        print("mail sent")
-        return redirect("/login")
-
-    return render(request,"forgotpassword.html")
-
-def changepassword(request,slug):
-    if request.method == "POST":
-        password = request.POST.get("password")
-        password2 = request.POST.get("password2")
-        if password == password2:
-            with transaction.atomic():
-                u = UserProfile.objects.get(verifycode=slug)
-                user = u.userz
-                user.set_password(password)
-                user.save()
-                u.verifycode = ""
-                u.save()
-                return redirect("/login")
-    if UserProfile.objects.filter(verifycode=slug).exists():
-        return render(request,"changepassword.html")
-    return redirect('/')
 
 def logoutacc(request):
     if request.user.is_anonymous:
@@ -268,6 +207,20 @@ def store(request,slug):
 
 def product(request,slug):
     if Product.objects.filter(productID=slug).exists():
+        product = Product.objects.get(pk=slug)
+        product.trend_score+=1
+        if request.user.is_authenticated:
+            if Product_history.objects.filter(user=request.user,product=product).exists():
+                ph = Product_history.objects.get(user=request.user,product=product)
+                ph.datetime = datetime.datetime.now()
+                ph.save()
+            else:
+                phlist = Product_history.objects.filter(user=request.user).order_by("datetime")
+                if len(phlist)>=10:
+                    phlist[0].delete()
+                ph = Product_history(user=request.user,product=product)
+                ph.save()
+        product.save()
         pass
     else:
         return HttpResponse("Product not found!")
@@ -288,10 +241,14 @@ def product(request,slug):
         finaldict["template"] = "base.html"
     
     finaldict["product"] = p
+    if Rating.objects.filter(product=slug).exists():
+        finaldict["reviews"] = list(Rating.objects.filter(product=slug).values("rating","review")[0:5])
+    else:
+        finaldict["reviews"] = []
     return render(request,'product.html',finaldict)
 
 def wishlist(request):
-    if request.user.is_anonymous:
+    if request.user.is_anonymous:   
         return redirect("/login")
     uwishlist = Wishlist.objects.filter(user = request.user)
     wishlistdet=[]
@@ -375,13 +332,9 @@ def buyproduct(request,slug):
             if p.quantity==0:
                 p.outofstock = True
             p.save()
-        subject = 'Order placed'
-        message = f'Hi {request.user.first_name} {request.user.last_name},\n\nYour order for order id {oid} has been placed. It will be soon at your doorstep.\n\nThanks,\nTeam Indian Kalakriti\n\nThis is an email generated from a project and not a real order placed.'
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = [request.user.email,]
-        send_mail( subject, message, email_from, recipient_list )
         return render(request,'orderplaced.html',{"template":"base2.html","orderid":oid})
     p = Product.objects.get(pk=slug)
+    p.trend_score+=3
     up = UserProfile.objects.get(userz=request.user)
     u = request.user
     if p.outofstock==True:
@@ -440,15 +393,11 @@ def buycart(request):
                 purchasedprod.save()
                 item.product.quantity = item.product.quantity-item.quantity
                 item.product.soldcount = item.product.soldcount+item.quantity
+                item.product.trend_score+=3
                 if item.product.quantity==0:
                     item.product.outofstock = True
                 item.product.save()
                 item.delete()
-        subject = 'Order placed'
-        message = f'Hi {request.user.first_name} {request.user.last_name},\n\nYour order for order id {oid} has been placed. It will be soon at your doorstep.\n\nThanks,\nTeam Indian Kalakriti\n\nThis is an email generated from a project and not a real order placed.'
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = [request.user.email,]
-        send_mail( subject, message, email_from, recipient_list )
         return render(request,'orderplaced.html',{"template":"base2.html","oid":oid})
     user = request.user
     userp = UserProfile.objects.get(userz=user)
@@ -488,11 +437,15 @@ def order(request,slug):
     return render(request,'order.html',orderdet)
 
 def apicalls(request,slug):
-    if request.user.is_anonymous:
-        return redirect("/login")
+    
     if request.method == "GET":
         if slug=="addtowishlist":
+            if request.user.is_anonymous:
+                return redirect("/login")
             productID = request.GET.get("productID")[2:]
+            p = Product.objects.get(productID=productID)
+            p.trend_score+=2
+            p.save()
             user = request.user
             if Wishlist.objects.filter(product=productID,user=user).exists():
                 return JsonResponse({"error":"Already exist in wishlist"},status=400)
@@ -505,7 +458,12 @@ def apicalls(request,slug):
                     return JsonResponse({"Error":"something went wrong"},status=400)
 
         if slug=="removefromwishlist":
+            if request.user.is_anonymous:
+                return redirect("/login")
             productID = request.GET.get("productID")[2:]
+            p = Product.objects.get(productID=productID)
+            p.trend_score-=2
+            p.save()
             user = request.user
             with transaction.atomic():
                 try:
@@ -516,6 +474,8 @@ def apicalls(request,slug):
 
 
         if slug=="addtocart":
+            if request.user.is_anonymous:
+                return redirect("/login")
             productID = request.GET.get("productID")
             user = request.user
             totalamount = 0
@@ -536,6 +496,9 @@ def apicalls(request,slug):
             with transaction.atomic():
                 try:
                     newcart = Cart(user=user,product=Product.objects.get(productID=productID),quantity=1)
+                    p = Product.objects.get(productID=productID)
+                    p.trend_score+=2
+                    p.save()
                     newcart.save()
                     totalamount = totalamount+newcart.product.price
                     return JsonResponse({"pid":productID,"button":"added","totalamount":totalamount,"message":"Successfully added to Cart!"},status=200)
@@ -543,6 +506,8 @@ def apicalls(request,slug):
                     return JsonResponse({"Error":"something went wrong"},status=400)
 
         if slug=="removefromcart":
+            if request.user.is_anonymous:
+                return redirect("/login")
             productID = request.GET.get("productID")
             user = request.user
             totalamount = 0
@@ -553,6 +518,9 @@ def apicalls(request,slug):
                 try:
                     cartobj = Cart.objects.filter(product=productID,user=user)[0]
                     if cartobj.quantity==1:
+                        p = Product.objects.get(productID=productID)
+                        p.trend_score-=2
+                        p.save()
                         cartobj.delete()
                     elif cartobj.quantity>1:
                         cartobj.quantity-=1
@@ -561,4 +529,33 @@ def apicalls(request,slug):
                     return JsonResponse({"pid":productID,"button":"add","totalamount":totalamount,"message":"Successfully removed from Cart!"},status=200)
                 except:
                     return JsonResponse({"error":"Something went wrong"},status=400)
+        
+        if slug=="getrating":
+            productID = request.GET.get("productID")
+            rating_count = Rating.objects.filter(product=productID).count()
+            delivered_rating = int(request.GET.get("lastrating"))
+            if rating_count==0 or rating_count<=delivered_rating:
+                return JsonResponse({"error":"End of rating"},status=400)
+            if Rating.objects.filter(product=productID).exists():
+                ratinglist = list(Rating.objects.filter(product=productID).values("rating","review"))
+                return JsonResponse({'rating':ratinglist},status=200)
+            return JsonResponse({"error":"Something went Wrong!"},status=400)
                 
+        if slug=="addreview":
+            if request.user.is_anonymous:
+                return redirect("/login")
+            productID = request.GET.get("productID")
+            rating = request.GET.get("rating")
+            review = request.GET.get("review")
+            if Rating.objects.filter(product=productID,user=request.user).exists():
+                return JsonResponse({"error":"Already rated this product"},status=400)
+            with transaction.atomic():
+                try:
+                    newrating = Rating(user=request.user,product=Product.objects.get(productID=productID),rating=rating,review=review)
+                    newrating.save()
+                    return JsonResponse({"message":"Successfully rated the product!"},status=200)
+                except Exception as e:
+                    print(e)
+                    return JsonResponse({"error":"Something went wrong"},status=400)
+                
+        

@@ -1,0 +1,121 @@
+{% extends template %}
+{% block title %}Home{% endblock title %} 
+{% block css%}/static/css/userindex.css{% endblock css %} 
+{% block body %}
+<div class="headdiv">
+  <div class="headdiv_1">
+    <img class="logoimg" src="/static/media/photos/finallogo-removebg.png">
+    <p class="hdp1">Cherish the spirit of India</p>
+    <p class="hdp2">A one-stop destination for all your personalized handicrafts products including Wall plates,  Name plates, Madhubani painting and Bottle art.</p><a
+    href="/store/madhubani_painting"
+    style="color: #8B4726; text-decoration: none"
+    >VISIT STORE</a
+  ><br>
+  </div>
+  <div class="headdiv_2">
+      <!-- Slideshow container -->
+      <div class="slideshow-container">
+  
+          <!-- Full-width images with number and caption text -->
+          <div class="mySlides fade">
+              <img src="/static/media/photos/4.jpg" style="width: 100%;object-fit:cover;">
+              <!-- <div class="text"></div> -->
+          </div>
+  
+          <div class="mySlides fade">
+              <img src="/static/media/photos/5.jpg" style="width: 100%;object-fit: cover;">
+              <!-- <div class="text"></div> -->
+          </div>
+  
+          <div class="mySlides fade">
+              <img src="/static/media/photos/7.jpg" style="width: 100%;object-fit: cover;">
+              <!-- <div class="text"></div> -->
+          </div>
+  
+          <!-- Next and previous buttons -->
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </div>
+  </div>
+</div>
+<br><br><br>
+
+
+
+<br><br>
+<div class="contdiv">
+  <h2>Products</h2>
+  <div class="prodcat">
+    <div class="prodcat_1">
+        <h4>Trending products</h4><br>
+        <div class="productdiv">
+            {% for product in trending_products %}
+            <div class="product">
+              <a href="/product/{{ product.productID }}" class="productlink">
+                <img src="/media/{{ product.image }}" loading="lazy" class="productimage"
+              /></a>
+              <br /><br />
+              <p class="pname">{{ product.name }}</p>
+              {% if product.outofstock == True %}
+              <span style="color: red">Out of stock!</span>
+              {% elif product.discount == 0 %}
+              <span style="font-size: 20px">&#8377; {{ product.price }}</span>
+              {% elif product.discount > 0%}
+              <span style="font-size: 20px"
+                >&#8377;<b> {{ product.discountedprice }} </b></span
+              ><span style="text-decoration:line-through;">{{ product.price }}</span> ({{ product.discount }}% off) 
+              {% endif %}
+            </div>
+            {% endfor %}
+            
+    </div>
+    <div class="prodcat_1">
+        <h4>Recent products</h4><br>
+        <div class="productdiv">
+            {% for product in recent_products %}
+            <div class="product">
+              <a href="/product/{{ product.productID }}" class="productlink">
+                <img src="/media/{{ product.image }}" loading="lazy" class="productimage"
+              /></a>
+              <br /><br />
+              <p class="pname">{{ product.name }}</p>
+              {% if product.outofstock == True %}
+              <span style="color: red">Out of stock!</span>
+              {% elif product.discount == 0 %}
+              <span style="font-size: 20px">&#8377; {{ product.price }}</span>
+              {% elif product.discount > 0%}
+              <span style="font-size: 20px"
+                >&#8377;<b> {{ product.discountedprice }} </b></span
+              ><span style="text-decoration:line-through;">{{ product.price }}</span> ({{ product.discount }}% off) 
+              {% endif %}
+            </div>
+            {% endfor %}
+    </div>
+    </div>
+    <div class="prodcat_1">
+        <h4>Recommended products</h4><br>
+        <div class="productdiv">
+            {% for product in featured_products %}
+            <div class="product">
+              <a href="/product/{{ product.productID }}" class="productlink">
+                <img src="/media/{{ product.image }}" loading="lazy" class="productimage"
+              /></a>
+              <br /><br />
+              <p class="pname">{{ product.name }}</p>
+              {% if product.outofstock == True %}
+              <span style="color: red">Out of stock!</span>
+              {% elif product.discount == 0 %}
+              <span style="font-size: 20px">&#8377; {{ product.price }}</span>
+              {% elif product.discount > 0%}
+              <span style="font-size: 20px"
+                >&#8377;<b> {{ product.discountedprice }} </b></span
+              ><span style="text-decoration:line-through;">{{ product.price }}</span> ({{ product.discount }}% off) 
+              {% endif %}
+            </div>
+            {% endfor %}
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock body %} 
+{% block javascript %}/static/js/index.js{% endblock javascript %}
